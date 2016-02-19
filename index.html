@@ -46,12 +46,36 @@
           })
         })
         
+        // make post request but don't reload page
+        $('#api-prevent').on('click', function(e) {
+          e.preventDefault();
+          console.log($('#api-location').val());
+          $('#api-window-dummy').hide();
+          
+          $.ajax({
+            url: 'apireq/get.stf',
+            type: 'POST',
+            data: {website: $('#api-location').val()},
+            success: function(data) {
+              $('#window-container').append('<iframe id="api-window-dummy" class="container" width="100%" height="300px" src="/gogetberk/hi.htx" name="iframe_a"></iframe>')
+            }
+          });
+        });
+        
       })
       
       </script>
     </head>
     <body>  
-      <iframe class='container' width="100%" height="300px" src="/gogetberk/hi.htx" name="iframe_a"></iframe> 
+      
+      <div>
+        <form action='apireq/get.stf' method='post'>
+        <input id='api-location' type="text" placeholder="Enter website here..." value='http://berkshirehathaway.com'/>
+        <button id='api-prevent' type="submit">Get API</button>
+      </div>
+      <div id='window-container'>
+      <iframe id='api-window-dummy' class='container' width="100%" height="300px" src="" name="iframe_a"></iframe> 
+      </div>
       <p><a href="http://www.w3schools.com" target="iframe_a">W3Schools.com</a></p> 
        <p>When the target of a link matches the name of an iframe, the link will open in the iframe.</p>  
       <button id='bt'>HI</button>
