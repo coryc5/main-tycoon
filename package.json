@@ -9,5 +9,11 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "dependencies": {
+    "bluebird": "^3.3.1",
+    "cheerio": "^0.20.0",
+    "request": "^2.69.0",
+    "request-promise": "^2.0.1"
+  }
 }
