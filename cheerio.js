@@ -54,4 +54,4 @@ var testObj2 = {
 getData('http://www.berkshirehathaway.com/', [testObj1, testObj2])
   .then(data => console.log(data));
 
-module.export = getData;
+module.exports = getData;
