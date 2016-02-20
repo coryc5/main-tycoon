@@ -6,6 +6,8 @@ const rp = require('request-promise');
 // the function returns a promise
 function getData (url, queries) {
 
+// test for bad url
+
 const options = {
   uri: url,
   transform: body => cheerio.load(body)
@@ -16,6 +18,7 @@ const data = rp(options)
     const result = {};
     queries.forEach(query => {
       result[query.name] = [];
+      //add error handling for bad query.string
       $(query.string).each((i, elem) => {
         if (query.text) {
           result[query.name].push($(elem).text());

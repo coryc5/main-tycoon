@@ -1,60 +1,17 @@
-<!DOCTYPE html> 
-  <html> 
+<!DOCTYPE html>
+  <html>
     <head>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-      <script>
-        var obj = {};
-        
-        // $(window).on('HELLO', function() {alert('hi')});
-        
-      // $(document).ready(function(){
-        
-      //   $('.container').contents().load(function() { console.log($(document).find('.container').contents())});
-        
-          // $('#bt').click(function() {
-          //   console.log($('.container').contents());
-          //   function testFn(param) {
-          //   };
-            
-          //   testFn($('.container'));
-          // });
-          
-      // });
-      $(document).ready(function() {
-        
-        function getPathTo(element) {
-          if (element.id !== '') return 'id("' + element.id + '")';
-          if (element === document.body) return element.tagName;
-
-          var ix = 0;
-          var siblings = element.parentNode.childNodes;
-          
-          for (var i = 0; i < siblings.length; i++) {
-            var sibling = siblings[i];
-              if (sibling === element) {
-                return getPathTo(element.parentNode) + '/' + element.tagName + '[' + (ix + 1) + ']';
-              }
-              if (sibling.nodeType === 1 && sibling.tagName === element.tagName) {
-                ix++;
-              }
-          }
-        }
-        
-        $('.container').load(function() {
-          $('.container').contents().click(function(e) {
-            console.log(getPathTo(e.target));
-          })
-        })
-        
-      })
-      
-      </script>
+      <script src="http://localhost:8080/assets/bundle.js"></script>
     </head>
-    <body>  
-      <iframe class='container' width="100%" height="300px" src="/gogetberk/hi.htx" name="iframe_a"></iframe> 
-      <p><a href="http://www.w3schools.com" target="iframe_a">W3Schools.com</a></p> 
-       <p>When the target of a link matches the name of an iframe, the link will open in the iframe.</p>  
-      <button id='bt'>HI</button>
-    </body> 
-    
+    <body>
+      <iframe class='container' width="100%" height="300px" src="/gogetberk/hi.htx" name="iframe_a"></iframe>
+      <div id='outputView'></div>
+      <div>
+        <input id='textSelect' type='checkbox'>Select Text Only<br>
+        <input id='attrSelect' type='text' placeholder='select attribute'></input>
+        <input id='nameSelect' type='text' placeholder='name your selection'></input>
+        <button id="shorten">Shorten</button>
+        <button id="lengthen">Lengthen</button>
+      </div>
+    </body>
     </html>
