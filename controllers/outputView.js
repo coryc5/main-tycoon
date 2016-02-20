@@ -46,8 +46,15 @@ function onLengthen(selFunc) {
 }
 
 function onAttr(selFunc, elem) {
-  $(elem).on('change', () => selFunc('current'));
-  $('#propName').change(() => selFunc('current'));
+  $(elem).on('change', e => {
+    e.preventDefault();
+    selFunc('current');
+  })
+  $('#propName').change(e => {
+    e.preventDefault();
+    selFunc('current');
+  })
+
 }
 
 function makePretty(obj) {
