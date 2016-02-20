@@ -34,9 +34,11 @@ $(document).ready(function() {
       type: 'POST',
       data: {website: $('#api-location').val()},
       success: function(data) {
-        $('#window-container').append('<iframe id="api-window" class="container" width="100%" height="600px" src="/apireqget/get.stf" name="iframe_a"></iframe>')
+        $('#window-container').append('<iframe id="api-window" class="container" width="100%" height="900px" src="/apireqget/get.stf" name="iframe_a"></iframe>')
 
         $('#api-window').load(function() {
+          
+          console.log('loaded!');
           $('#api-window').contents().click(function(e) {
             console.log('click');
             e.preventDefault();
@@ -46,11 +48,13 @@ $(document).ready(function() {
             selFunc('current');
             console.log('1', selFunc('current'));
 
-            $('#shorten').click(() => outputView.onShorten(selFunc));
-            $('#lengthen').click(() => outputView.onLengthen(selFunc ));
           });
+          
+          $('#shorten').click(() => outputView.onShorten(selFunc));
+          $('#lengthen').click(() => outputView.onLengthen(selFunc ));
         })
       }
+      
     });
   });
 });
