@@ -1,4 +1,4 @@
-var $ = require('jqeury');
+var $ = require('jquery');
 
 
 function buildGUI(str) {

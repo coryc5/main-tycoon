@@ -3,10 +3,12 @@ const outputView = require('./controllers/outputView.js');
 const stringHandler = require('./controllers/stringHandler.js');
 const cssHighlight = require('./controllers/cssHighlight.js');
 const $ = require('jquery');
+const createGUI = require('./controllers/gui');
 let selFunc;
 let highlight;
 
 const trgElem = '#api-window';
+
 
 // make post request but don't reload page
 $(document).ready(function() {
