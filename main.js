@@ -2,6 +2,8 @@
 const outputView = require('./controllers/outputView.js');
 const stringHandler = require('./controllers/stringHandler.js');
 const cssHighlight = require('./controllers/cssHighlight.js');
+const gui = require('./controllers/gui.js')
+
 const $ = require('jquery');
 const createGUI = require('./controllers/gui');
 let selFunc;
@@ -19,7 +21,10 @@ $(document).ready(function() {
     $.ajax({
       url: 'apitest/',
       type: 'POST',
-      data: {data: selFunc('current'), url: $('#api-location').val()},
+      data: {
+        data: selFunc('current'),
+        url: $('#api-location').val()
+      },
       success: function(data) {
         alert(data);
       }
@@ -33,7 +38,9 @@ $(document).ready(function() {
     $.ajax({
       url: 'apireqpost/post.stf',
       type: 'POST',
-      data: {website: $('#api-location').val()},
+      data: {
+        website: $('#api-location').val()
+      },
       success: function(data) {
         $('#window-container').append('<iframe id="api-window" class="container" width="100%" height="900px" src="/apireqget/get.stf" name="iframe_a"></iframe>')
 
@@ -44,25 +51,51 @@ $(document).ready(function() {
 
             selFunc = outputView.genOutput(e.target);
             selFunc('current');
+            $('#guiSelector').remove();
+            $('#dropDownMenu').remove();
+            gui.buildGUI(selFunc('current'));
 
             // create the initial highlight function when first element is selected
             if (highlight) highlight(null, 'clear');
             highlight = cssHighlight();
             highlight(selFunc('current'), 'initial');
 
-          });
 
-          $('#shorten').click(() => {
-            outputView.onShorten(selFunc);
-            highlight(selFunc('current'), 'shorten');
-          });
+            $('#shorten').click((e) => {
+              e.preventDefault();
+              outputView.onShorten(selFunc);
+              highlight(selFunc('current'), 'shorten');
+              gui.buildDropDown(selFunc('current'));
+            });
 
-          $('#lengthen').click(() => {
-            outputView.onLengthen(selFunc);
-            highlight(selFunc('current'), 'lengthen');
-          });
-        })
+            $('#lengthen').click((e) => {
+              e.preventDefault();
+              outputView.onLengthen(selFunc);
+              highlight(selFunc('current'), 'lengthen');
+              gui.buildDropDown(selFunc('current'))
+            });
+
+            $('#guiSelector').submit((e) => {
+              e.preventDefault();
+              var body = {};
+              body.name = $('#propName').val();
+              body.string = selFunc('current');
+              body.text = ($('#guiDropDown').val() === 'text');
+              body.attr = $('#guiDropDown').val();
+              console.log('body: ', body)
+
+              $.ajax({
+                type: 'POST',
+                url: '/apisubmit',
+                data: body,
+                success: function() {
+                  alert("sent!")
+                }
+              });
+            })
+          })
+        });
       }
-    });
-  });
-});
+    })
+  })
+})
