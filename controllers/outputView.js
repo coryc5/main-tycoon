@@ -15,14 +15,20 @@ function genOutput(target) {
   const adjStr = stringHandler.adjustStr(target);
 
   function inner(option) {
-    const txt = $('#textSelect').is(':checked');
-    const attr = $('#attrSelect').val();
-    const name = $('#nameSelect').val();
+    console.log($('#guiDropDown').val());
+    const att = $('#guiDropDown').val() || '';
+    const txt = att === 'text';
+    const name = $('#propName').val();
     const result = {};
     result[name] = [];
 
     $(trgElem).contents().find(adjStr(option)).each((index, elem) => {
-      result[name].push($(elem).text());
+      if (txt) {
+        result[name].push($(elem).text());
+      } else {
+        console.log(att);
+        result[name].push($(elem).attr(att));
+      }
     });
 
     // console.log('result is', result)
@@ -62,7 +68,7 @@ function makePretty(obj) {
 
   var html =
     `<div id='api-preview'>
-      <p>{</p>
+      <p>[</p>
       ${htmlArray.join('')}
       <p>]</p>
     </div>`
