@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var phantom = require('phantom');
 var MongoClient = require('./mongodb');
+var ObjectID = require('mongodb').ObjectID;
 
 var app = express();
 app.use(cookieParser());
@@ -13,24 +14,35 @@ app.use(bodyParser.urlencoded({
 }));
 
 app.get('/', function(req, res, next) {
-    if (!req.cookies.userId) {
+    if (!req.cookies.apitycID) {
       MongoClient(function(err, db) {
-        db.collection('api-collection').insert({}, function(err, doc) {
-          res.cookie('userId', doc._id);
-        })
+        db.collection('apiCollection').insert({}, function(err, doc) {
+          var uniqueID = doc.ops[0]._id;
+          res.cookie('apitycID', uniqueID);
+          res.send(fs.readFileSync(__dirname + '/index.html', 'utf8'));
+          db.close();
+        });
       });
+    } else if(req.cookies.apitycID) {
+      MongoClient(function(err, db) {
+        var objID = new ObjectID(req.cookies.apitycID);
+        db.collection('apiCollection').findOne({_id: objID}, function(err, result) {
+          console.log(result);
+          res.send(fs.readFileSync(__dirname + '/index.html', 'utf8'));
+          db.close();
+        })
+     });
+    } else {
+      res.send(fs.readFileSync(__dirname + '/index.html', 'utf8'));
     }
-  res.send(fs.readFileSync(__dirname + '/index.html', 'utf8'));
 });
 
 
 
 
 app.post('/apireq/get.stf', function(req, res, next) {
-  request(req.body.website, function(err, response, body) {
     res.cookie('website', req.body.website);
-    res.send(body);
-  });
+    res.send();
 });
 
 app.get('/gogetberk/hi.htx', function(req, res, next) {
@@ -56,7 +68,19 @@ app.get('/gogetberk/*', function(req, res, next) {
 });
 
 app.get('/tycooned/:id', function(req, res, next) {
+  var id = new ObjectID(req.params.id);
   
+  MongoClient(function(err, db) {
+    db.collection('apiCollection').findOne({_id: id}, function(err, result) {
+        if (result) {
+          res.sendStatus(200);
+        } else {
+        res.sendStatus(404);
+        }
+        
+      db.close();
+    });
+  })
 });
 
 app.get('*', function(req, res, next) {  

@@ -9,5 +9,12 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": ""
+  "description": "",
+  "devDependencies": {
+    "cookie-parser": "^1.4.1",
+    "mongodb": "^2.1.7"
+  },
+  "dependencies": {
+    "phantom": "^2.0.0-alpha.4"
+  }
 }
