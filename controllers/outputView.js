@@ -1,22 +1,7 @@
 const stringHandler = require('./stringHandler.js');
 const $ = require('jquery');
-let selFunc;
 
 const trgElem = '#api-window';
-
-// $(document).ready(function() {
-//   $(trgElem).load(function() {
-//     $(trgElem).contents().click(function(e) {
-//       e.preventDefault();
-//       selFunc = genOutput(e.target);
-//       selFunc('current');
-
-//       $('#shorten').click(() => onShorten());
-//       $('#lengthen').click(() => onLengthen());
-
-//     })
-//   })
-// });
 
 function genOutput(target) {
 
@@ -61,21 +46,21 @@ function makePretty(obj) {
   var title = Object.keys(obj)[0];
   var contents = obj[title];
   var htmlArray = [];
-  
+
   contents.forEach(function(input) {
-    htmlArray.push[`<p><span>${title}</span>: <span>${input}</span><p>`]    
+    htmlArray.push[`<p><span>${title}</span>: <span>${input}</span><p>`]
   });
-  
-  
-  var html = 
+
+
+  var html =
     `<div>
       <p>{</p>
       ${htmlArray.join('')}
       <p>}</p>
     </div>`
-  
+
   return html;
-  
+
 }
 
 module.exports = {
