@@ -88,8 +88,16 @@ $(document).ready(function() {
                 type: 'POST',
                 url: '/apisubmit',
                 data: body,
-                success: function() {
-                  alert("sent!")
+                success: function(data) {
+                  console.log('data is', data);
+                  $('#api-window').remove();
+                  $('#window-container').append(
+                    '<iframe id="api-window" class="container" width="100%" height="900px" src="goodbye.html" name="iframe_a"></iframe>'
+                  );
+                  setTimeout(function() {
+                    $('#api-window').contents().find('#url').append(`<p><a href="http://localhost:4000/api/${data}" target="_blank">http://localhost:4000/api/${data}</a></p>`);
+                    $('#api-window').contents().find('#url').append('hi')
+                  }, 500);
                 }
               });
             })

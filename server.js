@@ -107,35 +107,40 @@ app.get('/tycooned/:id', function(req, res, next) {
   })
 });
 
+app.get('/goodbye.html', function(req, res) {
+  res.sendFile(__dirname + '/goodbye.html');
+});
+
 app.post('/apisubmit', function(req, res) {
   var url = req.cookies.website;
-  var id = req.cookies.apitycID;
+  var id = new ObjectID(req.cookies.apitycID);
   var queries = req.body;
   
-  console.log('url', url);
-  console.log('queries', queries);
+  
   
   MongoClient(function(err, db) {
-    db.collection('apiCollection').update({_id: id}, {url: url, queries: queries}, function(err, result) {
-      console.log('updated result', result);
+    db.collection('apiCollection').updateOne({_id: id}, { $set: { url: url, queries: queries}}, function(err, result) {
+      // console.log('updated result', result);
       db.close();
     });
   });
   
   res.cookie('apitycID', 'null');
-  res.sendStatus(200);
+  res.send(id);
   
 });
 
 app.get('/api/:id', function(req, res) {
   var id = new ObjectID(req.params.id);
-
+  // console.log('grabbed', id);
   //get data from mongodb
   MongoClient(function(err, db) {
     db.collection('apiCollection').findOne({_id: id}, function(err, result) {
+      // console.log('found user', result);
       var url = result.url;
       var queries = result.queries;
       cheerio(url, [queries]).then(function(data) {
+        // console.log(data);
         res.send(data);
       });
     });
