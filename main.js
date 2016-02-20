@@ -103,7 +103,6 @@ $(document).ready(function() {
                   );
                   setTimeout(function() {
                     $('#api-window').contents().find('#url').append(`<p><a href="http://localhost:4000/api/${data}" target="_blank">http://localhost:4000/api/${data}</a></p>`);
-                    $('#api-window').contents().find('#url').append('hi')
                   }, 500);
                 }
               });
