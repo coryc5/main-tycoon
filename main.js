@@ -2,9 +2,11 @@
 const outputView = require('./controllers/outputView.js');
 const stringHandler = require('./controllers/stringHandler.js');
 const $ = require('jquery');
+const createGUI = require('./controllers/gui');
 let selFunc;
 
 const trgElem = '#api-window';
+
 
 // make post request but don't reload page
 $(document).ready(function() {
@@ -44,10 +46,8 @@ $(document).ready(function() {
             e.preventDefault();
             
             selFunc = outputView.genOutput(e.target);
-            console.log('fn', selFunc);
             selFunc('current');
-            console.log('1', selFunc('current'));
-
+            createGUI(selFunc('current'));
           });
           
           $('#shorten').click(() => outputView.onShorten(selFunc));

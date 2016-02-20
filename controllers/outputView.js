@@ -41,7 +41,7 @@ function genOutput(target) {
     });
 
     // console.log('result is', result)
-
+    $('#api-preview').remove()
     $('#gui-bottom').append(makePretty(result));
     return adjStr(option);
   }
@@ -61,17 +61,26 @@ function makePretty(obj) {
   var title = Object.keys(obj)[0];
   var contents = obj[title];
   var htmlArray = [];
+  contents = contents.slice(0,5);
   
-  contents.forEach(function(input) {
-    htmlArray.push[`<p><span>${title}</span>: <span>${input}</span><p>`]    
+    if (!title) title = 'You Forgot to Name Me~!';
+  
+  contents.forEach(function(input, index, array) {
+    if (index !== array.length - 1) {
+      htmlArray.push(`<p style='margin: 0; padding: 0'>{ "<span style='color: purple; font-weight: bold;'>${title}</span>": "<span style='color: green;'>${input}</span>" },<p>`);   
+    } else {
+      htmlArray.push(`<p style='margin: 0; padding: 0'>{ "<span style='color: purple; font-weight: bold;'>${title}</span>": "<span style='color: green;'>${input}</span>" }<p>`);
+    }
   });
   
+  console.log('contents is', contents)
+  console.log('html is', htmlArray);
   
   var html = 
-    `<div>
-      <p>{</p>
+    `<div id='api-preview'>
+      <p>[</p>
       ${htmlArray.join('')}
-      <p>}</p>
+      <p>]</p>
     </div>`
   
   return html;
