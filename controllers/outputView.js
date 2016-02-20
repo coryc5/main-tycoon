@@ -15,7 +15,6 @@ function genOutput(target) {
   const adjStr = stringHandler.adjustStr(target);
 
   function inner(option) {
-    console.log($('#guiDropDown').val());
     const att = $('#guiDropDown').val() || '';
     const txt = att === 'text';
     const name = $('#propName').val();
@@ -26,12 +25,10 @@ function genOutput(target) {
       if (txt) {
         result[name].push($(elem).text());
       } else {
-        console.log(att);
         result[name].push($(elem).attr(att));
       }
     });
 
-    // console.log('result is', result)
     $('#api-preview').remove()
     $('#gui-bottom').append(makePretty(result));
     return adjStr(option);
@@ -46,6 +43,11 @@ function onShorten(selFunc) {
 
 function onLengthen(selFunc) {
   selFunc('lengthen');
+}
+
+function onAttr(selFunc, elem) {
+  $(elem).on('change', () => selFunc('current'));
+  $('#propName').change(() => selFunc('current'));
 }
 
 function makePretty(obj) {
@@ -80,5 +82,6 @@ function makePretty(obj) {
 module.exports = {
   genOutput: genOutput,
   onShorten: onShorten,
-  onLengthen: onLengthen
+  onLengthen: onLengthen,
+  onAttr: onAttr
 };

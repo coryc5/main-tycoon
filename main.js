@@ -54,26 +54,33 @@ $(document).ready(function() {
             $('#guiSelector').remove();
             $('#dropDownMenu').remove();
             gui.buildGUI(selFunc('current'));
+            outputView.onAttr(selFunc, '#guiDropDown');
 
             // create the initial highlight function when first element is selected
             if (highlight) highlight(null, 'clear');
             highlight = cssHighlight();
             highlight(selFunc('current'), 'initial');
 
-
             $('#shorten').click((e) => {
               e.preventDefault();
               outputView.onShorten(selFunc);
               highlight(selFunc('current'), 'shorten');
+              const attrSelect = $('#guiDropDown').val();
               gui.buildDropDown(selFunc('current'));
+              $('#guiDropDown').val(attrSelect)
+              outputView.onAttr(selFunc, '#guiDropDown');
             });
 
             $('#lengthen').click((e) => {
               e.preventDefault();
               outputView.onLengthen(selFunc);
               highlight(selFunc('current'), 'lengthen');
-              gui.buildDropDown(selFunc('current'))
+              const attrSelect = $('#guiDropDown').val();
+              gui.buildDropDown(selFunc('current'));
+              $('#guiDropDown').val(attrSelect)
+              outputView.onAttr(selFunc, '#guiDropDown');
             });
+
 
             $('#guiSelector').submit((e) => {
               e.preventDefault();
@@ -82,14 +89,13 @@ $(document).ready(function() {
               body.string = selFunc('current');
               body.text = ($('#guiDropDown').val() === 'text');
               body.attr = $('#guiDropDown').val();
-              console.log('body: ', body)
 
               $.ajax({
                 type: 'POST',
                 url: '/apisubmit',
                 data: body,
                 success: function() {
-                  alert("sent!")
+                  // alert("sent!")
                 }
               });
             })
