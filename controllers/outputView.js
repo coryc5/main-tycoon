@@ -38,7 +38,6 @@ function genOutput(target) {
       result[name].push($(elem).text());
     });
 
-    console.log(result);
     $('#outputView').html(JSON.stringify(result));
   }
 

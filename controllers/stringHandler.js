@@ -50,8 +50,7 @@ function adjustStr(str) {
       if (str !== strHistory[strHistory.length -1]) {
         strHistory.push(str);
       }
-      var elArr = str.split(' ');
-      // var endOfString = elArr.pop();
+      var elArr = str.trim().split(' ');
       var baseElement = elArr.pop().split(':');
       if (baseElement.length === 2) {
         baseElement = baseElement[0];
