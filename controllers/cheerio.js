@@ -42,19 +42,19 @@ return data;
 // need to remove html & body elements from the fron of the string
 var testObj1 = {
   name: 'test',
-  string: 'center:nth-of-type(1) table:nth-of-type(1) tbody:nth-of-type(1) tr:nth-of-type(1) td:nth-of-type(2) ul:nth-of-type(1) li:nth-of-type(1) font',
+  string: 'div:nth-of-type(2) p:nth-of-type(1) a:nth-of-type(1)',
   text: true,
   attr: ''
 }
 
-var testObj2 = {
-  name: 'test2',
-  string: 'center:nth-of-type(1) table:nth-of-type(1) tbody:nth-of-type(1) tr:nth-of-type(1) td:nth-of-type(2) ul:nth-of-type(1) li:nth-of-type(1) font',
-  text: false,
-  attr: 'size'
-}
+// var testObj2 = {
+//   name: 'test2',
+//   string: 'center:nth-of-type(1) table:nth-of-type(1) tbody:nth-of-type(1) tr:nth-of-type(1) td:nth-of-type(2) ul:nth-of-type(1) li:nth-of-type(1) font',
+//   text: false,
+//   attr: 'size'
+// }
 
-getData('http://www.berkshirehathaway.com/', [testObj1, testObj2])
+getData('http://www.reddit.com/', [testObj1])
   .then(data => console.log(data));
 
 module.exports = getData;

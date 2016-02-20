@@ -46,10 +46,16 @@ function genOutput(target) {
   return inner;
 }
 
-function onShorten() {
+function onShorten(selFunc) {
   selFunc('shorten');
 }
 
-function onLengthen() {
+function onLengthen(selFunc) {
   selFunc('lengthen');
 }
+
+module.exports = {
+  genOutput: genOutput,
+  onShorten: onShorten,
+  onLengthen: onLengthen
+};
