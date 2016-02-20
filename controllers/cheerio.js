@@ -15,15 +15,19 @@ const options = {
 
 const data = rp(options)
   .then($ => {
-    const result = {};
+    const result = [];
     queries.forEach(query => {
       result[query.name] = [];
       //add error handling for bad query.string
       $(query.string).each((i, elem) => {
         if (query.text) {
-          result[query.name].push($(elem).text());
+          var tmpObj = {};
+          tmpObj[query.name] = $(elem).text()
+          result.push(tmpObj);
         } else {
-          result[query.name].push($(elem).attr(query.attr));
+          var tmpObj = {};
+          tmpObj[query.name] = $(elem).attr(query.attr);
+          result.push(tmpObj);
         }
       });
     });
@@ -43,8 +47,8 @@ return data;
 var testObj1 = {
   name: 'test',
   string: 'div:nth-of-type(2) p:nth-of-type(1) a:nth-of-type(1)',
-  text: true,
-  attr: ''
+  text: false,
+  attr: 'href'
 }
 
 // var testObj2 = {
