@@ -21,11 +21,10 @@ function strParse(str) {
   var id = jqArr.shift();
   jqArr.unshift('class("undefined")'); //remove once class added to output function
   var objClass = jqArr.shift();
-  var retStr = ''; //= "$('.container').contents().find('";
+  var retStr = '';
   jqArr.forEach(element => {
     retStr += parseObj(element);
   });
-  // retStr += "')"
   return retStr;
 }
 

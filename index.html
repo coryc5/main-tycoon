@@ -4,7 +4,15 @@
       <script src="http://localhost:8080/assets/bundle.js"></script>
     </head>
     <body>
-      <iframe class='container' width="100%" height="300px" src="/gogetberk/hi.htx" name="iframe_a"></iframe>
+      <div>
+        <form action='apireq/post.stf' method='post'>
+          <input id='api-location' type="text" placeholder="Enter website here..." value='http://berkshirehathaway.com'/>
+          <button id='api-prevent' type="submit">Get API</button>
+        </form>
+      </div>
+      <div id='window-container'>
+        <iframe id='api-window' class='container' width="100%" height="600px" src="http://berkshirehathaway.com" name="iframe_a"></iframe>
+      </div>
       <div id='outputView'></div>
       <div>
         <input id='textSelect' type='checkbox'>Select Text Only<br>
@@ -14,4 +22,4 @@
         <button id="lengthen">Lengthen</button>
       </div>
     </body>
-    </html>
+  </html>

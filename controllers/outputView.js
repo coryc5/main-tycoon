@@ -2,9 +2,11 @@ const stringHandler = require('./stringHandler.js');
 const $ = require('jquery');
 let selFunc;
 
+const trgElem = '#api-window';
+
 $(document).ready(function() {
-  $('.container').load(function() {
-    $('.container').contents().click(function(e) {
+  $(trgElem).load(function() {
+    $(trgElem).contents().click(function(e) {
       e.preventDefault();
       selFunc = genOutput(e.target);
       selFunc('current');
@@ -34,7 +36,7 @@ function genOutput(target) {
     const result = {};
     result[name] = [];
 
-    $('.container').contents().find(adjStr(option)).each((index, elem) => {
+    $(trgElem).contents().find(adjStr(option)).each((index, elem) => {
       result[name].push($(elem).text());
     });
 
