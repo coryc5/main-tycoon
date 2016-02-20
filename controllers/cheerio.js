@@ -54,7 +54,7 @@ var testObj1 = {
 //   attr: 'size'
 // }
 
-getData('http://www.reddit.com/', [testObj1])
-  .then(data => console.log(data));
+// getData('http://www.reddit.com/', [testObj1])
+//   .then(data => console.log(data));
 
 module.exports = getData;
