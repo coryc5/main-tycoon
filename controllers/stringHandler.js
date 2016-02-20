@@ -17,6 +17,7 @@ function getPathTo(element) {
 
 function strParse(str) {
   str = getPathTo(str);
+  console.log(str);
   var jqArr = str.split('/');
   var id = jqArr.shift();
   jqArr.unshift('class("undefined")'); //remove once class added to output function
@@ -41,6 +42,7 @@ function adjustStr(str) {
 
   function shortenStr(option) {
     if (option === 'current') {
+      console.log(str);
       return str;
     }
 
@@ -80,5 +82,6 @@ function adjustStr(str) {
 
 module.exports = {
   strParse: strParse,
-  adjustStr: adjustStr
+  adjustStr: adjustStr,
+  getPathTo: getPathTo
 }
