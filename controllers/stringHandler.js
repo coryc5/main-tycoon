@@ -42,7 +42,6 @@ function adjustStr(str) {
 
   function shortenStr(option) {
     if (option === 'current') {
-      console.log(str);
       return str;
     }
 

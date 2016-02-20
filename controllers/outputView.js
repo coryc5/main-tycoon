@@ -41,6 +41,7 @@ function genOutput(target) {
     });
 
     $('#outputView').html(JSON.stringify(result));
+    return adjStr(option);
   }
 
   return inner;

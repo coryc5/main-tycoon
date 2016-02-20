@@ -6,6 +6,7 @@ var bodyParser = require('body-parser');
 var phantom = require('phantom');
 var MongoClient = require('./mongodb');
 var ObjectID = require('mongodb').ObjectID;
+var cheerio = require('./controllers/cheerio');
 
 var app = express();
 app.use(cookieParser());
@@ -40,6 +41,31 @@ app.get('/', function(req, res, next) {
     } else {
       res.send(fs.readFileSync(__dirname + '/index.html', 'utf8'));
     }
+});
+
+app.get('/blank.html', function(req, res) {
+  res.sendFile(__dirname + '/blank.html');
+})
+
+app.post('/apitest', function(req, res) {
+  var string = req.body.data;
+  var url = req.body.url;
+  
+  console.log(req.body);
+  
+  var temp = {};
+  
+  temp.name = 'test';
+  temp.string = string;
+  temp.text = true;
+  temp.attr = '';
+  
+  console.log(string);
+  
+  cheerio(url, [temp]).then(function(data) {
+    res.send(JSON.stringify(data));
+  });
+  
 });
 
 app.post('/apireqpost/post.stf', function(req, res, next) {
