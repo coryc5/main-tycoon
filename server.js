@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({
 
 
 app.get('/', function(req, res, next) {
-    if (!req.cookies.apitycID) {
+    if (!req.cookies.apitycID || req.cookies.apitycID === 'null') {
       MongoClient(function(err, db) {
         db.collection('apiCollection').insert({}, function(err, doc) {
           var uniqueID = doc.ops[0]._id;
@@ -107,6 +107,26 @@ app.get('/tycooned/:id', function(req, res, next) {
   })
 });
 
+app.post('/apisubmit', function(req, res) {
+  var url = req.cookies.website;
+  var id = req.cookies.apitycID;
+  var queries = req.body;
+  
+  console.log('url', url);
+  console.log('queries', queries);
+  
+  MongoClient(function(err, db) {
+    db.collection('apiCollection').update({_id: id}, {url: url, queries: queries}, function(err, result) {
+      console.log('updated result', result);
+      db.close();
+    });
+  });
+  
+  res.cookie('apitycID', 'null');
+  res.sendStatus(200);
+  
+});
+
 app.get('/api/:id', function(req, res) {
   var id = new ObjectID(req.params.id);
 
@@ -115,7 +135,7 @@ app.get('/api/:id', function(req, res) {
     db.collection('apiCollection').findOne({_id: id}, function(err, result) {
       var url = result.url;
       var queries = result.queries;
-      cheerio(url, queries).then(function(data) {
+      cheerio(url, [queries]).then(function(data) {
         res.send(data);
       });
     });
