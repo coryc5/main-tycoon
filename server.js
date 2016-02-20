@@ -1,5 +1,5 @@
-var express = require('express');
 var fs = require('fs');
+var express = require('express');
 var request = require('request');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
@@ -13,6 +13,7 @@ app.use(bodyParser.urlencoded({
   extended: true
 }));
 
+
 app.get('/', function(req, res, next) {
     if (!req.cookies.apitycID) {
       MongoClient(function(err, db) {
@@ -23,15 +24,19 @@ app.get('/', function(req, res, next) {
           db.close();
         });
       });
-    } else if(req.cookies.apitycID) {
-      MongoClient(function(err, db) {
-        var objID = new ObjectID(req.cookies.apitycID);
-        db.collection('apiCollection').findOne({_id: objID}, function(err, result) {
-          console.log(result);
-          res.send(fs.readFileSync(__dirname + '/index.html', 'utf8'));
-          db.close();
-        })
-     });
+      
+    // if you need to see how to access the object after finding it
+    // } else if (req.cookies.apitycID) {
+    //   MongoClient(function(err, db) {
+    //     var objID = new ObjectID(req.cookies.apitycID);
+           
+    //     db.collection('apiCollection').findOne({_id: objID}, function(err, result) {
+    //       console.log(result);
+    //       res.send(fs.readFileSync(__dirname + '/index.html', 'utf8'));
+    //       db.close();
+    //     });
+    //  });
+    
     } else {
       res.send(fs.readFileSync(__dirname + '/index.html', 'utf8'));
     }
@@ -40,12 +45,12 @@ app.get('/', function(req, res, next) {
 
 
 
-app.post('/apireq/get.stf', function(req, res, next) {
+app.post('/apireqpost/post.stf', function(req, res, next) {
     res.cookie('website', req.body.website);
     res.send();
 });
 
-app.get('/gogetberk/hi.htx', function(req, res, next) {
+app.get('/apireqget/get.stf', function(req, res, next) {
   // console.log(req.cookies.website);
   
   phantom.create().then(function(ph) {
@@ -63,7 +68,7 @@ app.get('/gogetberk/hi.htx', function(req, res, next) {
  
 });
 
-app.get('/gogetberk/*', function(req, res, next) { 
+app.get('/apireqget/*', function(req, res, next) { 
   res.redirect(req.cookies.website + '/' + req.originalUrl.slice(10));
 });
 

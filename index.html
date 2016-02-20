@@ -3,23 +3,7 @@
     <head>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
       <script>
-        var obj = {};
-        
-        // $(window).on('HELLO', function() {alert('hi')});
-        
-      // $(document).ready(function(){
-        
-      //   $('.container').contents().load(function() { console.log($(document).find('.container').contents())});
-        
-          // $('#bt').click(function() {
-          //   console.log($('.container').contents());
-          //   function testFn(param) {
-          //   };
-            
-          //   testFn($('.container'));
-          // });
-          
-      // });
+     
       $(document).ready(function() {
         
         function getPathTo(element) {
@@ -40,10 +24,11 @@
           }
         }
         
-        $('.container').load(function() {
-          $('.container').contents().click(function(e) {
+        
+        $('#api-window').load(function() {
+          $('#api-window').contents().click(function(e) {
             console.log(getPathTo(e.target));
-          })
+          });
         })
         
         // make post request but don't reload page
@@ -53,11 +38,17 @@
           $('#api-window').remove();
           
           $.ajax({
-            url: 'apireq/get.stf',
+            url: 'apireqpost/post.stf',
             type: 'POST',
             data: {website: $('#api-location').val()},
             success: function(data) {
-              $('#window-container').append('<iframe id="api-window" class="container" width="100%" height="600px" src="/gogetberk/hi.htx" name="iframe_a"></iframe>')
+              $('#window-container').append('<iframe id="api-window" class="container" width="100%" height="600px" src="/apireqget/get.stf" name="iframe_a"></iframe>')
+              
+              $('#api-window').load(function() {
+                $('#api-window').contents().click(function(e) {
+                  console.log(getPathTo(e.target));
+                });
+              })
             }
           });
         });
@@ -69,12 +60,12 @@
     <body>  
       
       <div>
-        <form action='apireq/get.stf' method='post'>
+        <form action='apireq/post.stf' method='post'>
         <input id='api-location' type="text" placeholder="Enter website here..." value='http://berkshirehathaway.com'/>
         <button id='api-prevent' type="submit">Get API</button>
       </div>
       <div id='window-container'>
-      <iframe id='api-window' class='container' width="100%" height="600px" src="" name="iframe_a"></iframe> 
+      <iframe id='api-window' class='container' width="100%" height="600px" src="http://berkshirehathaway.com" name="iframe_a"></iframe> 
       </div>
       <p><a href="http://www.w3schools.com" target="iframe_a">W3Schools.com</a></p> 
        <p>When the target of a link matches the name of an iframe, the link will open in the iframe.</p>  
