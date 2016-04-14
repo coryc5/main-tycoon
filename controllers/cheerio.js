@@ -20,7 +20,7 @@ const data = rp(options)
       result[query.name] = [];
       //add error handling for bad query.string
       $(query.string).each((i, elem) => {
-        if (query.text) {
+        if (query.text === 'true') {
           var tmpObj = {};
           tmpObj[query.name] = $(elem).text()
           result.push(tmpObj);
