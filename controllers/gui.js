@@ -1,7 +1,6 @@
-var $ = require('jquery');
+var $ = require('jquery')
 
-function buildGUI(str) {
-
+function buildGUI (str) {
   $('#gui').append(`<form id="guiSelector">
     <input id="propName" type='text' placeholder='Name of Property' name='propName'/><br/>
     <button id = "shorten"> More </button>
@@ -11,36 +10,36 @@ function buildGUI(str) {
     <div id="dropDownMenu"></div>
   `)
 
-  buildDropDown(str);
+  buildDropDown(str)
 }
 
-function buildDropDown(str) {
-  $('#guiDropDown').remove();
+function buildDropDown (str) {
+  $('#guiDropDown').remove()
 
-  const jqueryString = "$('#api-window').contents().find('" + str + "')";
+  const jqueryString = "$('#api-window').contents().find('" + str + "')"
   var query = jqueryString + '.get(0).attributes'
-  var attributes = eval(query);
-  var attObj = {};
+  var attributes = eval(query)
+  var attObj = {}
   for (var i = 0; i < attributes.length; i++) {
-    attObj[attributes[i].nodeName] = attributes[i].nodeValue;
+    attObj[attributes[i].nodeName] = attributes[i].nodeValue
   }
 
   // var textQuery = jqueryString + '.text()';
   // attObj.text = eval(textQuery);
 
-  var attNames = Object.keys(attObj);
-  var dropDown = '<select id="guiDropDown" name="attr" form="guiSelector"><option value="text">text</option>';
+  var attNames = Object.keys(attObj)
+  var dropDown = '<select id="guiDropDown" name="attr" form="guiSelector"><option value="text">text</option>'
 
-  attNames.forEach(att => {
+  attNames.forEach((att) => {
     dropDown += '<option value="' + att + '">' + att + '</option>'
   })
 
-  dropDown += '</select>';
+  dropDown += '</select>'
 
-  $('#dropDownMenu').append(dropDown);
-
+  $('#dropDownMenu').append(dropDown)
 }
+
 module.exports = {
-  buildGUI:buildGUI,
+  buildGUI: buildGUI,
   buildDropDown: buildDropDown
 }

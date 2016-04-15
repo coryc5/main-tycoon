@@ -32,6 +32,7 @@ $(document).ready(function() {
   })
 
   $('#api-prevent').on('click', function(e) {
+
     e.preventDefault();
     $('#api-window').remove();
 
